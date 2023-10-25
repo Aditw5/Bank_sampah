@@ -31,10 +31,10 @@
                             <tr>
                                 <th >No</th>
                                 <th >Date</th>
-                                <th >Supplier Name</th>
-                                <th >Total Item</th>
+                                <th >Member Name</th>
+                                <th >Total Item (kg)</th>
                                 <th >Total Price</th>
-                                <th >Discont</th>
+                                <th >Bonus</th>
                                 <th >Total Pay</th>
                                 <th >Action</th>
                             </tr>
@@ -42,7 +42,7 @@
                     </table>
             </div>
     </div>
-@includeIf('admin.purchase.supplier')
+@includeIf('admin.purchase.member')
 @includeIf('admin.purchase.detail')
 @endsection
 
@@ -69,10 +69,10 @@
     var columns = [
         {data: 'DT_RowIndex', class: 'text-center', orderable: false},
         {data: 'created_at', class: 'text-center', orderable: true},
-        {data: 'supplier_name', class: 'text-center', orderable: false},
+        {data: 'member_name', class: 'text-center', orderable: false},
         {data: 'total_item', class: 'text-center', orderable: false},
         {data: 'total_price', class: 'text-center', orderable: false},
-        {data: 'discont', class: 'text-center', orderable: false},
+        {data: 'bonus', class: 'text-center', orderable: false},
         {data: 'pay', class: 'text-center', orderable: false},
         {data: 'action', class: 'text-center', orderable: false},
     ];
@@ -81,7 +81,7 @@
     let table, table1;
 
     $(function () {
-        $('.table-supplier').DataTable();
+        $('.table-member').DataTable();
         table1 = $('.table-detail').DataTable({
             processing: true,
             bSort: false,
@@ -132,7 +132,7 @@
             addData() {
                 this.data = {};
                 this.editStatus = false
-                $('#modal-supplier').modal();
+                $('#modal-member').modal();
                 // console.log('add data');
             },
             editData(event, row) {

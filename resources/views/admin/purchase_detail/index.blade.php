@@ -34,28 +34,13 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
-            <div class="box-header with-border">
-                <table>
-                    <tr>
-                        <td>Supplier</td>
-                        <td>: {{ $supplier->supplier_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Phone</td>
-                        <td>: {{ $supplier->phone }}</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>: {{ $supplier->address }}</td>
-                    </tr>
-                </table>
-            </div>
+            <!--  -->
             <div class="box-body">
                     
                 <form class="form-produk">
                     @csrf
                     <div class="form-group row">
-                        <label for="product_code" class="col-lg-2">Product Code</label>
+                        <label for="product_code" class="col-lg-2">Rubbish Code</label>
                         <div class="col-lg-5">
                             <div class="input-group">
                                 <input type="hidden" name="purchase_id" id="purchase_id" value="{{ $purchase_id }}">
@@ -72,10 +57,10 @@
                 <table class="table table-stiped table-bordered table-pembelian">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Product Code</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th width="15%">Amount</th>
+                        <th>Rubbish Code</th>
+                        <th>Rubbish Name</th>
+                        <th>Price Per Kg</th>
+                        <th width="15%">Amount (Kg)</th>
                         <th>Subtotal</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </thead>
@@ -103,13 +88,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="discont" class="col-lg-2 control-label">Discont</label>
+                                <label for="bonus" class="col-lg-2 control-label">Bonus</label>
                                 <div class="col-lg-8">
-                                    <input type="number" name="discont" id="discont" class="form-control" value="{{ $discont }}">
+                                    <input type="number" name="bonus" id="bonus" class="form-control" value="{{ $bonus }}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="pay" class="col-lg-2 control-label">Sale</label>
+                                <label for="pay" class="col-lg-2 control-label"> Tota Pay</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="bayarrp" class="form-control">
                                 </div>
@@ -171,7 +156,7 @@
             paginate: false
         })
         .on('draw.dt', function () {
-            loadForm($('#discont').val());
+            loadForm($('#bonus').val());
         });
         table2 = $('.table-produk').DataTable();
 
@@ -197,7 +182,7 @@
                 })
                 .done(response => {
                     $(this).on('mouseout', function () {
-                        table.ajax.reload(() => loadForm($('#discont').val()));
+                        table.ajax.reload(() => loadForm($('#bonus').val()));
                     });
                 })
                 .fail(errors => {
@@ -206,7 +191,7 @@
                 });
         });
 
-        $(document).on('input', '#discont', function () {
+        $(document).on('input', '#bonus', function () {
             if ($(this).val() == "") {
                 $(this).val(0).select();
             }
@@ -238,7 +223,7 @@
         $.post('{{ route('purchases_detail.store') }}', $('.form-produk').serialize())
             .done(response => {
                 $('#product_code').focus();
-                table.ajax.reload(() => loadForm($('#discont').val()));
+                table.ajax.reload(() => loadForm($('#bonus').val()));
             })
             .fail(errors => {
                 alert('Tidak dapat menyimpan data');
@@ -252,7 +237,7 @@
                     '_method': 'delete'
                 })
                 .done((response) => {
-                    table.ajax.reload(() => loadForm($('#discont').val()));
+                    table.ajax.reload(() => loadForm($('#bonus').val()));
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menghapus data');
@@ -260,11 +245,11 @@
                 });
         }
     }
-    function loadForm(discont = 0) {
+    function loadForm(bonus = 0) {
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`{{ url('purchases_detail/loadform') }}/${discont}/${$('.total').text()}`)
+        $.get(`{{ url('purchases_detail/loadform') }}/${bonus}/${$('.total').text()}`)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);
                 $('#bayarrp').val('Rp. '+ response.bayarrp);

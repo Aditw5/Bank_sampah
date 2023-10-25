@@ -10,8 +10,8 @@ class Purchase extends Model
     use HasFactory;
     protected $fillable = [
         'total_item', 
-        'supplier_id', 
+        'member_id', 
         'total_price', 
-        'discont', 
+        'bonus', 
         'pay'];
 }

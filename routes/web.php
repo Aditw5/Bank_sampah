@@ -34,6 +34,8 @@ Route::resource('/categorys', App\Http\Controllers\CategoryController::class);
 Route::resource('/products', App\Http\Controllers\ProductController::class);
 Route::post('/products/print-barcode', [App\Http\Controllers\ProductController::class, 'PrintBarcode'])->name('products.print_barcode');
 Route::post('/products/delete-selected', [App\Http\Controllers\ProductController::class, 'deleteSelected'])->name('products.delete_selected');
+Route::get('products/showImage/{filename}', [App\Http\Controllers\ProductController::class, 'showImage'])->name('products.showImage');
+
 
 Route::resource('/members', App\Http\Controllers\MemberController::class);
 Route::post('/products/print-card', [App\Http\Controllers\MemberController::class, 'printCard'])->name('members.print_card');

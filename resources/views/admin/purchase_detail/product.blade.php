@@ -10,16 +10,14 @@
                 <table class="table table-striped table-bordered table-produk">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Product Code</th>
-                        <th>Name</th>
-                        <th>Buy Price</th>
+                        <th>Rubbish Name</th>
+                        <th>Price Per Kg</th>
                         <th><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody>
                         @foreach ($product as $key => $item)
                             <tr>
                                 <td width="5%">{{ $key+1 }}</td>
-                                <td><span class="label label-success">{{ $item->product_code }}</span></td>
                                 <td>{{ $item->product_name }}</td>
                                 <td>{{ $item->buy_price }}</td>
                                 <td>

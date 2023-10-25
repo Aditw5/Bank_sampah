@@ -12,10 +12,8 @@ class Product extends Model
         'product_name',
         'product_code',
         'category_id',
-        'merk',
-        'sell_price',
+        'description',
+        'foto',
         'buy_price',
-        'discon',
-        'stock',
     ];
 }

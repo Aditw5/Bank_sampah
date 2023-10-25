@@ -36,14 +36,12 @@
                                     <input type="checkbox" name="select_all" id="select_all">
                                 </th>
                                 <th width="5%">No</th>
-                                <th >Product Code</th>
-                                <th >Product Name</th>
+                                <th >Rubbish Code</th>
+                                <th >Rubbish Name</th>
                                 <th >Category</th>
-                                <th >Merk</th>
-                                <th >Buy Price</th>
-                                <th >Sell Price</th>
-                                <th >Discon</th>
-                                <th >Stock</th>
+                                <th >Price Per Kg</th>
+                                <th >Description</th>
+                                <th >Foto</th>
                                 <th >Action</th>
                             </tr>
                         </thead>
@@ -57,7 +55,7 @@
                 <div class="modal-content">
                     <form :action="actionUrl" method="post" autocomplete="off" @submit="submitForm($event, data.id)">
                         <div class="modal-header">
-                            <h4 class="modal-title">Category</h4>
+                            <h4 class="modal-title">New Rubbish</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -66,12 +64,8 @@
                             @csrf
                             <input type="hidden" name="_method" value="PUT" v-if="editStatus">
                             <div class="form-group">
-                                <label>Product Name</label>
+                                <label>Rubbish Name</label>
                                 <input name="product_name" :value="data.product_name" type="text" required="" class="form-control" placeholder="Enter Product Name">
-                            </div>
-                            <div class="form-group">
-                                <label>Product Merk</label>
-                                <input name="merk" :value="data.merk" type="text" required="" class="form-control" placeholder="Enter Product Merk">
                             </div>
                             <div class="form-group">
                                 <label>Category</label>
@@ -83,20 +77,15 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Sell Price</label>
-                                <input name="sell_price" :value="data.sell_price" type="number" required="" class="form-control" placeholder="Enter Sell Price">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" :value="data.description" rows="3" placeholder="Enter Description"></textarea>
+                            <div class="form-group">
+                                <label>Foto</label>
+                                <input type="file"  :value="data.foto" name="foto" accept="image/*" required class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Buy Price</label>
+                                <label>Price Per Kg</label>
                                 <input name="buy_price" :value="data.buy_price" type="number" required="" class="form-control" placeholder="Enter Buy Price">
-                            </div>
-                            <div class="form-group">
-                                <label>Discon</label>
-                                <input name="discon" :value="data.discon" type="number" required="" class="form-control" placeholder="Enter Discon">
-                            </div>
-                            <div class="form-group">
-                                <label>Stock</label>
-                                <input name="stock" :value="data.stock" type="number" required="" class="form-control" placeholder="Enter Stock">
                             </div>
                             
                         </div>
@@ -136,11 +125,11 @@
         {data: 'product_code', class: 'text-center', orderable: true},
         {data: 'product_name', class: 'text-center', orderable: true},
         {data: 'name', class: 'text-center', orderable: true},
-        {data: 'merk', class: 'text-center', orderable: true},
         {data: 'buy_price', class: 'text-center', orderable: true},
-        {data: 'sell_price', class: 'text-center', orderable: true},
-        {data: 'discon', class: 'text-center', orderable: true},
-        {data: 'stock', class: 'text-center', orderable: true},
+        {data: 'description', class: 'text-center', orderable: true},
+        {data: 'foto', class: 'text-center', orderable: true},
+       
+       
         {render: function (data, index, row, meta) {
             return `
                 <a class="btn btn-warning" onclick="controller.editData(event, ${meta.row})" href="#">

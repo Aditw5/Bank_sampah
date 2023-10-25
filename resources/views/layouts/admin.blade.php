@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>POS</title>
+  <title>RB</title>
 
 
   <!-- Font Awesome -->
@@ -108,7 +108,7 @@
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
       <img src="{{asset('assets/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-bold text-center">POS</span>
+      <span class="brand-text font-weight-bold text-center">Rubbish Bank</span>
 
     </a>
 
@@ -158,7 +158,7 @@
             <a href="{{url('categorys')}}" class="nav-link {{ request()->is('categorys') ? 'active' : '' }}">
               <i class="nav-icon fas fa-box"></i>
               <p>
-                Category
+               Rubbish Category
               </p>
             </a>
           </li>
@@ -166,7 +166,7 @@
             <a href="{{url('products')}}" class="nav-link {{ request()->is('products') ? 'active' : '' }}">
               <i class="nav-icon fas fa-boxes"></i>
               <p>
-                Product
+              Rubbish Details
               </p>
             </a>
           </li>
@@ -178,14 +178,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{url('suppliers')}}" class="nav-link {{ request()->is('suppliers') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-truck"></i>
-              <p>
-                Supplier
-              </p>
-            </a>
-          </li>
+        
           @endrole
           <li class="nav-header">TRANSACTION</li>
           <li class="nav-item">
@@ -200,26 +193,11 @@
             <a href="{{url('purchases')}}" class="nav-link {{ request()->is('purchases') ? 'active' : '' }}">
               <i class="nav-icon fas fa-download"></i>
               <p>
-                Purchases
+              Deposit Rubbish
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="{{route('sale.index')}}" class="nav-link {{ request()->is('sale') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-upload"></i>
-              <p>
-                Sale
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('transaction.new')}}" class="nav-link {{ request()->is('transaction') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-cart-plus"></i>
-              <p>
-                New Transaction
-              </p>
-            </a>
-          </li>
+          
           @role('admin')
           <li class="nav-header">REPORT</li>
           <li class="nav-item">

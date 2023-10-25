@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\PurchaseDetail;
 use App\Models\Sale;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -51,9 +53,17 @@ class HomeController extends Controller
     {
         $total_product = Product::count();
         $total_member = Member::count();
-        $total_sale = Sale::count();
         $total_purchase = Purchase::count();
 
-        return view('home', compact('total_product', 'total_member', 'total_sale', 'total_purchase'));
+        $data_rubbish = PurchaseDetail::select(DB::raw("COUNT(product_id) as total"))
+        ->groupBy('product_id')
+        ->orderBy('product_id', 'asc')
+        ->pluck('total');
+        $labels = PurchaseDetail::orderBy('products.id', 'asc')
+        ->join('products', 'purchase_details.product_id', '=', 'products.id')
+        ->groupBy('products.id', 'product_name')
+        ->pluck('product_name');
+
+        return view('home', compact('labels','data_rubbish','total_product', 'total_member', 'total_purchase'));
     }
 }

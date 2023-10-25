@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
-use App\Models\Supplier;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class PurchaseDetailController extends Controller
@@ -17,13 +17,13 @@ class PurchaseDetailController extends Controller
     {
         $purchase_id = session('id');
         $product = Product::orderBy('product_name')->get();
-        $supplier = Supplier::find(session('supplier_id'));
-        $discont = Purchase::find($purchase_id)->discont ?? 0;
+        $member = Member::find(session('member_id'));
+        $bonus = Purchase::find($purchase_id)->bonus ?? 0;
 
         // return session('id');
   
 
-        return view('admin.purchase_detail.index', compact('purchase_id', 'product', 'supplier', 'discont'));
+        return view('admin.purchase_detail.index', compact('purchase_id', 'product', 'member', 'bonus'));
     }
 
     /**
@@ -147,7 +147,7 @@ class PurchaseDetailController extends Controller
 
     public function loadForm($diskon, $total)
     {
-        $bayar = $total - ($diskon / 100 * $total);
+        $bayar = $total + ($diskon / 100 * $total);
         $data  = [
             'totalrp' => format_uang($total),
             'bayar' => $bayar,

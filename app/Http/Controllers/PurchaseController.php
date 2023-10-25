@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
-use App\Models\Supplier;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -21,16 +21,16 @@ class PurchaseController extends Controller
 
     public function index()
     {
-        $suppliers = Supplier::orderBy('supplier_name')->get();
+        $members = Member::orderBy('member_name')->get();
 
-        return view('admin.purchase.purchase', compact('suppliers'));
+        return view('admin.purchase.purchase', compact('members'));
     }
 
     public function api() 
     {
 
-        $purchases = Purchase::leftJoin('suppliers', 'purchases.supplier_id', '=', 'suppliers.id')
-            ->select('purchases.*', 'supplier_name')
+        $purchases = Purchase::leftJoin('members', 'purchases.member_id', '=', 'members.id')
+            ->select('purchases.*', 'member_name')
             ->orderBy('id', 'desc')->get();
 
         return datatables()->of($purchases)
@@ -44,8 +44,8 @@ class PurchaseController extends Controller
             ->addColumn('pay', function ($purchases) {
                 return 'Rp. '. format_uang($purchases->pay);
             })
-            ->editColumn('discont', function ($purchases) {
-                return $purchases->discont . '%';
+            ->editColumn('bonus', function ($purchases) {
+                return $purchases->bonus . '%';
             })
             ->addColumn('action', function ($purchases) {
                 return '
@@ -67,15 +67,15 @@ class PurchaseController extends Controller
     public function create($id)
     {
         $purchase = new Purchase();
-        $purchase->supplier_id = $id;
+        $purchase->member_id = $id;
         $purchase->total_item  = 0;
         $purchase->total_price= 0;
-        $purchase->discont     = 0;
+        $purchase->bonus     = 0;
         $purchase->pay       = 0;
         $purchase->save();
 
         session(['id' => $purchase->id]);
-        session(['supplier_id' => $purchase->supplier_id]);
+        session(['member_id' => $purchase->memberid]);
 
         return redirect()->route('purchases_detail.index');
     }
@@ -88,17 +88,13 @@ class PurchaseController extends Controller
         $purchase = Purchase::findOrFail($request->purchase_id);
         $purchase->total_item = $request->total_item;
         $purchase->total_price = $request->total;
-        $purchase->discont = $request->discont;
+        $purchase->bonus = $request->bonus;
         $purchase->pay = $request->pay;
         $purchase->update();
 
         $details = PurchaseDetail::where('purchase_id', $purchase->id)->get();
     
-        foreach ($details as $detail) {
-            $product = Product::find($detail->product_id);
-            $product->stock += $detail->amount;
-            $product->update();
-        }
+       
     
         return redirect()->route('purchases.index');
     }
