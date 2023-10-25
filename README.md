@@ -1,6 +1,14 @@
-# Rubbish Bank Application
+# Rubbish Bank 
 
 This Rubbish Bank application is a rubbish collection and management system built using Laravel and Vue.js. This application enables users to collect rubbish, calculate the total payment for the rubbish deposits, and provides functionality for both administrators and cashiers.
+
+## Default User Accounts
+Admin:
+    Email: admin@gmail.com
+    Password: 12345678
+User/Client:
+    Email: adit@gmail.com
+    Password: 12345678
 
 ## Key Features
 
