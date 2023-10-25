@@ -9,19 +9,19 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="tanggal_awal" class="col-lg-2 col-lg-offset-1 control-label">Start Date</label>
+                        <label for="start_date" class="col-lg-2 col-lg-offset-1 control-label">Start Date</label>
                         <div class="col-lg-6">
-                            <input type="date" name="tanggal_awal" id="tanggal_awal" class="form-control datepicker" required autofocus
-                                value="{{ request('tanggal_awal') }}"
+                            <input type="date" name="start_date" id="start_date" class="form-control datepicker" required autofocus
+                                value="{{ request('start_date') }}"
                                 style="border-radius: 0 !important;">
                             <span class="help-block with-errors"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="tanggal_akhir" class="col-lg-2 col-lg-offset-1 control-label">End Date</label>
+                        <label for="end_date" class="col-lg-2 col-lg-offset-1 control-label">End Date</label>
                         <div class="col-lg-6">
-                            <input type="date" name="tanggal_akhir" id="tanggal_akhir" class="form-control datepicker" required
-                                value="{{ request('tanggal_akhir') ?? date('Y-m-d') }}"
+                            <input type="date" name="end_date" id="end_date" class="form-control datepicker" required
+                                value="{{ request('end_date') ?? date('Y-m-d') }}"
                                 style="border-radius: 0 !important;">
                             <span class="help-block with-errors"></span>
                         </div>

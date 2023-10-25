@@ -12,61 +12,56 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        $tanggalAwal = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
-        $tanggalAkhir = date('Y-m-d');
+        $start_date = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
+        $end_date = date('Y-m-d');
 
-        if ($request->has('tanggal_awal') && $request->tanggal_awal != "" && $request->has('tanggal_akhir') && $request->tanggal_akhir) {
-            $tanggalAwal = $request->tanggal_awal;
-            $tanggalAkhir = $request->tanggal_akhir;
+        if ($request->has('start_date') && $request->start_date != "" && $request->has('end_date') && $request->end_date) {
+            $start_date = $request->start_date;
+            $end_date = $request->end_date;
         }
 
-        return view('admin.report.index', compact('tanggalAwal', 'tanggalAkhir'));
+        return view('admin.report.index', compact('start_date', 'end_date'));
     }
 
-    public function getData($awal, $akhir)
+    public function getData($start, $end)
     {
         $no = 1;
         $data = array();
-        $pendapatan = 0;
-        $total_pendapatan = 0;
 
-        while (strtotime($awal) <= strtotime($akhir)) {
-            $tanggal = $awal;
-            $awal = date('Y-m-d', strtotime("+1 day", strtotime($awal)));
 
-            $total_penjualan = Sale::where('created_at', 'LIKE', "%$tanggal%")->sum('pay');
-            $total_pembelian = Purchase::where('created_at', 'LIKE', "%$tanggal%")->sum('pay');
-            $total_pengeluaran = Expenditure::where('created_at', 'LIKE', "%$tanggal%")->sum('nominal');
+        while (strtotime($start) <= strtotime($end)) {
+            $date = $start;
+            $start = date('Y-m-d', strtotime("+1 day", strtotime($start)));
 
-            $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
-            $total_pendapatan += $pendapatan;
+            $total_deposit = Purchase::where('created_at', 'LIKE', "%$date%")->sum('pay');
+            $total_rubbish = Purchase::where('created_at', 'LIKE', "%$date%")->sum('total_item');
+            $total_expendature = Expenditure::where('created_at', 'LIKE', "%$date%")->sum('nominal');
+
 
             $row = array();
             $row['DT_RowIndex'] = $no++;
-            $row['tanggal'] = tanggal_indonesia($tanggal, false);
-            $row['penjualan'] = format_uang($total_penjualan);
-            $row['pembelian'] = format_uang($total_pembelian);
-            $row['pengeluaran'] = format_uang($total_pengeluaran);
-            $row['pendapatan'] = format_uang($pendapatan);
+            $row['date'] = tanggal_indonesia($date, false);
+            $row['deposit_rubbish'] = format_uang($total_deposit);
+            $row['total_rubbish'] = $total_rubbish;
+            $row['expendature'] = format_uang($total_expendature);
 
             $data[] = $row;
         }
 
         $data[] = [
             'DT_RowIndex' => '',
-            'tanggal' => '',
-            'penjualan' => '',
-            'pembelian' => '',
-            'pengeluaran' => 'Total Income',
-            'pendapatan' => format_uang($total_pendapatan),
+            'date' => '',
+            'deposit_rubbish' => '',
+            'total_rubbish' => '',
+            'expendature' => '',
         ];
 
         return $data;
     }
 
-    public function data($awal, $akhir)
+    public function data($start, $end)
     {
-        $data = $this->getData($awal, $akhir);
+        $data = $this->getData($start, $end);
 
         return datatables()
             ->of($data)

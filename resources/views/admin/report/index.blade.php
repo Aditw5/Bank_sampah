@@ -20,10 +20,9 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Date</th>
-                        <th>Sale</th>
-                        <th>Purchases</th>
+                        <th>Total Deposit Rubbish</th>
+                        <th>Total Rubbish (KG)</th>
                         <th>Expenditure</th>
-                        <th>Income</th>
                     </thead>
                 </table>
             </div>
@@ -57,15 +56,14 @@
             serverSide: true,
             autoWidth: false,
             ajax: {
-                url: '{{ route('report.data', [$tanggalAwal, $tanggalAkhir]) }}',
+                url: '{{ route('report.data', [$start_date, $end_date]) }}',
             },
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
-                {data: 'tanggal'},
-                {data: 'penjualan'},
-                {data: 'pembelian'},
-                {data: 'pengeluaran'},
-                {data: 'pendapatan'}
+                {data: 'date'},
+                {data: 'deposit_rubbish'},
+                {data: 'total_rubbish'},
+                {data: 'expendature'},
             ],
             dom: 'Brt',
             bSort: false,
