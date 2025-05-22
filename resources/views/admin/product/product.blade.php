@@ -16,7 +16,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-sg-1">
-                        <a href="#" @click="addData()" class="btn btn-primary pull-right">Create New Product</a>
+                        <a href="#" @click="addData()" class="btn btn-primary pull-right">Create New Products</a>
                     </div>
                     <div class="col-sg-1">
                         <a onclick="printBarcode('{{route('products.print_barcode')}}')"  class="btn btn-info pull-right mx-2">Print Barcode</a>
